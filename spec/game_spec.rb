@@ -1,8 +1,8 @@
 require 'game'
 describe Game do
 	let(:game){Game.new}
-	let(:board){double :board, floating_ships?: true, ship_count: 1}
-	let(:board2){double :board, ship_count: 1}
+	let(:board){double :board, floating_ships?: true, ships_count: 1}
+	let(:board2){double :board, ships_count: 1}
 	let(:player1){double :player, board: board, has_board?: true }
 	let(:player2){double :player, board: board2, has_board?: true } 
 
@@ -86,7 +86,7 @@ context "has two players with boards" do
 	end
 
 	it "expects to ask a ship count from players 1s board" do 
-		expect(board).to receive(:ship_count).and_return 5
+		expect(board).to receive(:ships_count).and_return 5
 		game.ready?
 	end
 
@@ -96,8 +96,8 @@ context "has two players with boards" do
 	end
 
 	it "expects to ask a ship count from player 2s board" do 
-		allow(board).to receive(:ship_count).and_return 5
-		expect(board2).to receive(:ship_count).and_return 5
+		allow(board).to receive(:ships_count).and_return 5
+		expect(board2).to receive(:ships_count).and_return 5
 		game.ready?
 	end
 
@@ -107,9 +107,9 @@ context "has two players with boards" do
 	end
 
 	it "knows when a game is ready" do 
-		allow(board).to receive(:ship_count).and_return 5
+		allow(board).to receive(:ships_count).and_return 5
 		allow(player1).to receive(:has_board?).and_return true
-		allow(board2).to receive(:ship_count).and_return 5
+		allow(board2).to receive(:ships_count).and_return 5
 		allow(player2).to receive(:has_board?).and_return true
 		expect(game.ready?).to eq true
 	end
