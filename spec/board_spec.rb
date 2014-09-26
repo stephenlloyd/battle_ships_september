@@ -48,7 +48,7 @@ describe Board do
 		expect(board.floating_ships?).to eq false
 	end
 
-		it "passes a shot onto a ship" do
+	it "passes a shot onto a ship" do
 		expect(cell).to receive(:shoot)
 		board.shoot_at(:A1)
 	end
@@ -69,8 +69,7 @@ describe Board do
 	end
 
 	it "knows how many ships are on the grid" do
-		board.grid[:A1] = second_cell
-		board.grid[:A2] = second_cell
+		board.grid[:A1],board.grid[:A2] = second_cell, second_cell
 		board.grid[:B1] = third_cell
 		allow(second_cell).to receive(:content).and_return ship
 		allow(third_cell).to receive(:content).and_return second_ship

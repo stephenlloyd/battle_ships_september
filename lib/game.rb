@@ -11,17 +11,17 @@ class Game
 	end
 
 	def opponent
-		turn == player1 ? player2 : player1
+		current_player == player1 ? player2 : player1
 	end
 
 	def shoots(coord)
 		opponent.receive_shot(coord)
-		raise "There is a winner" if winner
+		raise "There is a winner you cannot shoot" if winner
 		switch_turns 
 	end
 
 	def winner
-		turn unless opponent.board.floating_ships?
+		current_player unless opponent.board.floating_ships?
 	end
 
 	def ready?
@@ -33,6 +33,8 @@ private
 	def turn 
 		@turn ||= player1
 	end
+
+	alias :current_player :turn
 
 	def both_players_have_five_ships?
 		(player1.board.ship_count == 5) and (player2.board.ship_count == 5) 

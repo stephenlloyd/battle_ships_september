@@ -64,7 +64,7 @@ context "has two players with boards" do
 	it "raises there is a winner if there is a winner" do 
 		allow(board2).to receive(:floating_ships?).and_return(false)
 		allow(player2).to receive(:receive_shot).with(:A1)
-		expect{game.shoots(:A1)}.to raise_error "There is a winner"
+		expect{game.shoots(:A1)}.to raise_error "There is a winner you cannot shoot"
 	end
 
 	it "can have an opponent" do 

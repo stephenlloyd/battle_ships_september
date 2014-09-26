@@ -3,8 +3,7 @@ class Ship
 	attr_accessor :hits
 
 	def initialize(size)
-		@size = size
-		@hits = 0
+		@size, @hits = size, 0
 	end
 
 	def hit!
@@ -17,7 +16,7 @@ class Ship
 	end
 
 	def self.aircraft_carrier
-		new(5)
+		new 5
 	end
 
 	def self.battleship
