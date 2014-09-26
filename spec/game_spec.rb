@@ -17,20 +17,20 @@ describe Game do
 		expect(game.player2).to eq player2
 	end
 
-	it "is ready to begin when there are two players" do 
-		game.add_player(player1)
-		game.add_player(player2)
-		expect(game.has_two_players?).to eq true
+	it "knows when there are two players" do 
+		game.send(:add_player, player1)
+		game.send(:add_player,player2)
+		expect(game.send(:has_two_players?)).to eq true
 	end
 
 	it "knows when it doesn't have two players" do
-		game.add_player(player1)
-		expect(game.has_two_players?).to eq false
+		game.send(:add_player, player1)
+		expect(game.send(:has_two_players?)).to eq false
 	end
 
 	it "knows whos turn it is" do 
 		game.add_player(player1)
-		expect(game.turn).to eq(player1)
+		expect(game.send(:turn)).to eq(player1)
 	end
 
 context "has two players with boards" do
@@ -44,7 +44,7 @@ context "has two players with boards" do
 		allow(player2).to receive(:receive_shot)
 		allow(board2).to receive(:floating_ships?).and_return(true)
 		game.shoots(:A1)
-		expect(game.turn).to eq player2
+		expect(game.send(:turn)).to eq player2
 	end
 
 	it "receives a shot" do 
@@ -72,8 +72,8 @@ context "has two players with boards" do
 	end
 
 	it "can switch turns" do 
-		game.switch_turns
-		expect(game.turn).to eq player2
+		game.send(:switch_turns)
+		expect(game.send(:turn)).to eq player2
 	end
 
 	it "knows if there is a winner" do

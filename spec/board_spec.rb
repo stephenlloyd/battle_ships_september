@@ -3,12 +3,11 @@ require 'board'
 describe Board do
 	let(:water) {double :water}
 	let(:cell){double :cell, content: water, :content= => nil, hit?:nil}
-	let(:second_cell){double :second_cell, :content= => nil, hit?: nil}
+	let(:second_cell){double :second_cell, :content= => nil,content: nil, hit?: nil}
 	let(:third_cell){double :second_cell, :content= => nil, hit?: nil}
 	let(:cell_class){double :cell_class, :new => cell}
 	let(:ship){double :ship, size: 2, sunk?: false }
 	let(:second_ship){double :ship, size: 2, sunk?: false }
-
 	let(:board){Board.new(cell_class)}
 
 	it "can have a grid of 100 places" do
@@ -78,6 +77,10 @@ describe Board do
 		expect(board.ships_count).to eq 2
 	end
 
-
+	it "won't let you place a ship on top of another ship" do
+		board.grid[:A1] = second_cell
+		allow(second_cell).to receive(:content).and_return ship
+		expect{board.place(ship,:A1)}.to raise_error "You cannot place a ship on another ship"
+	end
 
 end
