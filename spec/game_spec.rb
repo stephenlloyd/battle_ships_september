@@ -1,10 +1,10 @@
 require 'game'
 describe Game do
 	let(:game){Game.new}
-	let(:board){double :board, floating_ships?: true}
-	let(:board2){double :board}
-	let(:player1){double :player, board: board }
-	let(:player2){double :player, board: board2 } 
+	let(:board){double :board, floating_ships?: true, ship_count: 1}
+	let(:board2){double :board, ship_count: 1}
+	let(:player1){double :player, board: board, has_board?: true }
+	let(:player2){double :player, board: board2, has_board?: true } 
 
 	it "can have players added" do 
 		game.add_player(player1)
@@ -33,7 +33,7 @@ describe Game do
 		expect(game.turn).to eq(player1)
 	end
 
-context "is ready" do
+context "has two players with boards" do
 
 	before do
 		game.add_player(player1)
@@ -79,6 +79,39 @@ context "is ready" do
 	it "knows if there is a winner" do
 		allow(board2).to receive(:floating_ships?).and_return(false)
 		expect(game.winner).to eq player1 
+	end
+
+	it "knows a game is not ready" do
+		expect(game.ready?).to eq false
+	end
+
+	it "expects to ask a ship count from players 1s board" do 
+		expect(board).to receive(:ship_count).and_return 5
+		game.ready?
+	end
+
+	it "expects to ask if player 1 has a board" do 
+		expect(player1).to receive(:has_board?).and_return true
+		game.ready?
+	end
+
+	it "expects to ask a ship count from player 2s board" do 
+		allow(board).to receive(:ship_count).and_return 5
+		expect(board2).to receive(:ship_count).and_return 5
+		game.ready?
+	end
+
+	it "expects to ask player2 if they have a board" do 
+		expect(player2).to receive(:has_board?).and_return true
+		game.ready?
+	end
+
+	it "knows when a game is ready" do 
+		allow(board).to receive(:ship_count).and_return 5
+		allow(player1).to receive(:has_board?).and_return true
+		allow(board2).to receive(:ship_count).and_return 5
+		allow(player2).to receive(:has_board?).and_return true
+		expect(game.ready?).to eq true
 	end
 
 end

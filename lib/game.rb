@@ -36,11 +36,18 @@ class Game
 		turn unless opponent.board.floating_ships?
 	end
 
-	#todo
-	# def ready?
-	# 	if has_two_players?
-	# 	if both_players_have_boards?
-	# 	if both_players_boards_have_five_ships_placed?
-	# end
+	def ready?
+		has_two_players? and both_players_have_boards? and both_players_have_five_ships?
+	end
+
+private 
+
+	def both_players_have_five_ships?
+		(player1.board.ship_count == 5) and (player2.board.ship_count == 5) 
+	end
+
+	def both_players_have_boards?
+		player1.has_board? and player2.has_board? 
+	end
 
 end

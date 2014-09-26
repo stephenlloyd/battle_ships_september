@@ -3,16 +3,20 @@ class Board
 
 	def initialize(content)
 		@grid = {}
-		[*"A".."J"].each do |l|
-			[*1..10].each {|n| @grid["#{l}#{n}".to_sym] = content.new}
-		end
+			[*"A".."J"].each do |l|
+				[*1..10].each {|n| @grid["#{l}#{n}".to_sym] = content.new}
+			end
 	end
 
 	def place(ship, coord, orientation = :horizontally)
-		ship.size.times do
-			grid[coord].content = ship
-			coord = next_coord(coord, orientation) 
-		end
+		coords = [coord]
+		ship.size.times{coords << next_coord(coords.last, orientation)}
+		put_on_grid_if_possible(coords, ship)
+	end
+
+	def put_on_grid_if_possible(coords, ship)
+		raise "You cannot place a ship outside of the grid" if (grid.keys & coords) != coords
+		coords.each{|coord|grid[coord].content = ship}
 	end
 
 	def floating_ships?
@@ -25,7 +29,11 @@ class Board
 	end
 
 	def ships
-		grid.values.select{|cell|is_a_ship?(cell)}.map(&:content)
+		grid.values.select{|cell|is_a_ship?(cell)}.map(&:content).uniq
+	end
+
+	def ships_count
+		ships.count
 	end
 
 private
@@ -43,8 +51,7 @@ private
 	end
 
 	# todo
-	# won't let you place a ship outside of the grid
 	# won't let you place a ship over or next to another ship
-	
+
 end
 
