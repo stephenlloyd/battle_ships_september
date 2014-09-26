@@ -15,8 +15,12 @@ class Board
 	end
 
 	def put_on_grid_if_possible(coords, ship)
-		raise "You cannot place a ship outside of the grid" if (grid.keys & coords) != coords
+		raise "You cannot place a ship outside of the grid" if any_coord_not_on_grid?(coords)
 		coords.each{|coord|grid[coord].content = ship}
+	end
+
+	def any_coord_not_on_grid?(coords)
+		(grid.keys & coords) != coords
 	end
 
 	def floating_ships?
