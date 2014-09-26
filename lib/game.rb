@@ -28,13 +28,13 @@ class Game
 		has_two_players? and both_players_have_boards? and both_players_have_five_ships?
 	end
 
-private 
-
 	def turn 
 		@turn ||= player1
 	end
 
 	alias :current_player :turn
+
+private 
 
 	def both_players_have_five_ships?
 		(player1.board.ships_count == 5) and (player2.board.ships_count == 5) 
