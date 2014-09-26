@@ -13,12 +13,12 @@ describe Player do
 		expect(player.board).to eq board
 	end
 
-	it "can haz board?" do
+	it "knows it has a board" do
 		player.board = board
 		expect(player).to have_board
 	end
 
-	it "can receive shoots" do
+	it "can receive shots" do
 		player.board = board
 		expect(board).to receive(:shoot_at).with(:A1)
 		player.receive_shot(:A1)
