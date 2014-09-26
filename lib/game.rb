@@ -3,12 +3,11 @@ class Game
 	attr_writer :turn
 
 	def initialize
-		player1 = nil
-		player2 = nil
+		player1, player2 = nil, nil
 	end
 
 	def add_player(player)
-		self.player1 ? self.player2 = player : self.player1 = player
+		self.player1 ? self.player2 = player : self.player1 = player unless has_two_players?
 	end
 
 	def has_two_players?
@@ -25,7 +24,8 @@ class Game
 
 	def shoots(coord)
 		opponent.receive_shot(coord)
-		switch_turns unless winner
+		raise "There is a winner" if winner
+		switch_turns 
 	end
 
 	def switch_turns
@@ -33,7 +33,14 @@ class Game
 	end
 
 	def winner
-		turn if !opponent.board.floating_ships?
+		turn unless opponent.board.floating_ships?
 	end
+
+	#todo
+	# def ready?
+	# 	if has_two_players?
+	# 	if both_players_have_boards?
+	# 	if both_players_boards_have_five_ships_placed?
+	# end
 
 end

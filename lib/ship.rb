@@ -9,6 +9,7 @@ class Ship
 
 	def hit!
 		self.hits += 1
+		true
 	end
 
 	def sunk?

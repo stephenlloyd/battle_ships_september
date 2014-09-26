@@ -33,7 +33,7 @@ describe Game do
 		expect(game.turn).to eq(player1)
 	end
 
-context "game is ready" do
+context "is ready" do
 
 	before do
 		game.add_player(player1)
@@ -61,11 +61,10 @@ context "game is ready" do
 		game.shoots(:A1)
 	end
 
-	it "doesn't switch turns if there is a winner" do 
+	it "raises there is a winner if there is a winner" do 
 		allow(board2).to receive(:floating_ships?).and_return(false)
 		allow(player2).to receive(:receive_shot).with(:A1)
-		game.shoots(:A1)
-		expect(game.turn).to eq player1
+		expect{game.shoots(:A1)}.to raise_error "There is a winner"
 	end
 
 	it "can have an opponent" do 

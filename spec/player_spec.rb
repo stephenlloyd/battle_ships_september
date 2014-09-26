@@ -1,7 +1,8 @@
 require 'player'
 describe Player do
 	let(:player){Player.new}
-	let(:board){double :board} 
+	let(:board){double :board}
+	 
 	it "can have a name" do 
 		player.name = "Stephen"
 		expect(player.name).to eq "Stephen"

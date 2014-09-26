@@ -2,8 +2,8 @@ require 'board'
 
 describe Board do
 	let(:water) {double :water}
-	let(:cell){double :cell, content: water, :content= => nil}
-	let(:second_cell){double :second_cell, :content= => nil}
+	let(:cell){double :cell, content: water, :content= => nil, hit?:nil}
+	let(:second_cell){double :second_cell, :content= => nil, hit?: nil}
 	let(:cell_class){double :cell_class, :new => cell}
 	let(:ship){double :ship, size: 2, sunk?: false }
 	let(:board){Board.new(cell_class)}
@@ -55,6 +55,11 @@ describe Board do
 		board.grid[:A1] = second_cell
 		allow(second_cell).to receive(:content).and_return ship
 		expect(board.ships).to eq [ship]
+	end
+
+	it "cannot shoot at a cell which has been hit already" do
+		allow(cell).to receive(:hit?).and_return true
+		expect{board.shoot_at(:A1)}.to raise_error "You cannot hit the same square twice"
 	end
 
 

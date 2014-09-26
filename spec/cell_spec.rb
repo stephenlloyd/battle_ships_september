@@ -2,15 +2,21 @@ require 'cell'
 
 describe Cell do
 	let(:cell){Cell.new}
-	let(:content){double :content}
+	let(:content){double :content, hit!: true}
+	before{cell.content = content}
+
 	it "can have content" do
-		cell.content = :water
-		expect(cell.content).to eq :water
+		expect(cell.content).to eq content
 	end
 
 	it "can shoot it's content" do
-		cell.content = content
 		expect(content).to receive(:hit!)
 		cell.shoot
 	end
+
+	it "knows when it's been hit" do
+		cell.shoot
+		expect(cell.hit?).to eq true 
+	end
+
 end
