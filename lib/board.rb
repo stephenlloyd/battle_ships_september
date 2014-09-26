@@ -15,7 +15,7 @@ class Board
 	end
 
 	def floating_ships?
-		!ships.any?(&:sunk?)
+		ships.any?(&:floating?)
 	end
 
 	def shoot_at(coordinate)
