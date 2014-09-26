@@ -17,4 +17,10 @@ describe Player do
 		expect(player).to have_board
 	end
 
+	it "can receive shoots" do
+		player.board = board
+		expect(board).to receive(:shoot_at).with(:A1)
+		player.receive_shot(:A1)
+	end
+
 end

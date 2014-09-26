@@ -1,5 +1,6 @@
 class Game
 	attr_accessor :player1, :player2
+	attr_writer :turn
 
 	def initialize
 		player1 = nil
@@ -15,17 +16,24 @@ class Game
 	end
 
 	def turn 
-		player1
+		@turn ||= player1
 	end
 
 	def opponent
+		turn == player1 ? player2 : player1
 	end
 
 	def shoots(coord)
-		opponent.receive_shot()
-		switch_turns
+		opponent.receive_shot(coord)
+		switch_turns unless winner
 	end
 
+	def switch_turns
+		turn == player1 ? self.turn = player2 : self.turn = player1
+	end
 
+	def winner
+		turn if !opponent.board.floating_ships?
+	end
 
 end
