@@ -36,7 +36,7 @@ class Ship
 	end
 
 	def self.patrol_boat
-		new 5
+		new 2
 	end
 
 end
