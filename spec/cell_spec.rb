@@ -1,7 +1,7 @@
 require 'cell'
 
 describe Cell do
-	let(:cell){Cell.new}
+	let(:cell){Cell.new(content)}
 	let(:content){double :content, hit!: true}
 	before{cell.content = content}
 

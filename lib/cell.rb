@@ -1,6 +1,7 @@
 class Cell
 	attr_accessor :content
-	def initialize
+	def initialize(content)
+		@content = content
 		@hit = false
 	end
 
