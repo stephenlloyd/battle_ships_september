@@ -1,11 +1,8 @@
 class Board
 	attr_reader :grid
 
-	def initialize(content)
-		@grid = {}
-		[*"A".."J"].each do |l|
-			[*1..10].each {|n| @grid["#{l}#{n}".to_sym] = content.new}
-		end
+	def initialize(cell, cell_content)
+		@grid = create_empty_grid_with(cell, cell_content)
 	end
 
 	def place(ship, coord, orientation = :horizontally)
@@ -32,6 +29,14 @@ class Board
 	end
 
 private
+
+  def create_empty_grid_with(cell, cell_content)
+    grid = {}
+		[*"A".."J"].each do |l|
+			[*1..10].each {|n| grid["#{l}#{n}".to_sym] = cell.new(cell_content.new)}
+		end
+		grid
+  end
 
  	def next_coord(coord, orientation)
 		orientation == :vertically ? next_vertical(coord) : coord.next
